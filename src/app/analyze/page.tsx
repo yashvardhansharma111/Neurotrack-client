@@ -19,7 +19,7 @@ import { EmotionHeat } from "@/components/emotion-heat"
 import type { AnalyzeResponse } from "@/types/analyze"
 import { Info } from "lucide-react"
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://127.0.0.1:8000"
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000"
 const MAX_FILE_MB = 100
 
 export default function AnalyzePage() {
@@ -128,7 +128,7 @@ export default function AnalyzePage() {
 
   const envBadge = useMemo(
     () =>
-      API_BASE.startsWith("http://127.0.0.1") || API_BASE.startsWith("http://localhost") ? "Local API" : "Remote API",
+      API_BASE.startsWith("http://127.0.0.1") || API_BASE.startsWith("http://localhost:8000") ? "Local API" : "Remote API",
     [],
   )
 
