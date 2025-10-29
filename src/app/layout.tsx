@@ -9,6 +9,7 @@ import { Toaster } from "sonner"
 import { cn } from "@/lib/utils"
 import { Suspense } from "react"
 import { ToastProvider } from "@/hooks/use-toast"
+import { AuthProvider } from "@/contexts/auth-context"
 
 
 
@@ -21,10 +22,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className="dark">
       <body className={cn(`font-sans ${GeistSans.variable} ${GeistMono.variable}`)}>
         <Suspense fallback={null}>
-          <ToastProvider>
-          <Toaster richColors position="top-right" closeButton />
-          {children}
-          </ToastProvider>
+          <AuthProvider>
+            <ToastProvider>
+              <Toaster richColors position="top-right" closeButton />
+              {children}
+            </ToastProvider>
+          </AuthProvider>
           <Analytics />
         </Suspense>
       </body>

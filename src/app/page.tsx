@@ -1,18 +1,23 @@
+"use client"
+
 import Link from "next/link"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ShieldCheck, Timer, Gauge, Cable } from "lucide-react"
+import { ShieldCheck, Timer, Gauge, Cable, Video, BarChart3, Zap, TrendingUp, ArrowRight } from "lucide-react"
+import { useAuth } from "@/contexts/auth-context"
 
 export default function HomePage() {
+  const { isAuthenticated } = useAuth()
+
   return (
     <div className="min-h-dvh flex flex-col">
       <Navbar />
       <main className="flex-1">
         {/* Hero */}
-        <section className="border-b border-border/60">
+        <section className="border-b border-border/60 bg-gradient-to-b from-background to-muted/20">
           <div className="mx-auto max-w-6xl px-4 py-16 md:py-24">
             <Badge className="mb-4">Private by Design</Badge>
             <h1 className="text-pretty text-3xl font-semibold leading-tight md:text-5xl">
@@ -23,12 +28,30 @@ export default function HomePage() {
               analysis.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button asChild>
-                <Link href="/analyze">Try Analysis</Link>
+              {isAuthenticated && (
+                <Button asChild size="lg">
+                  <Link href="/questionnaire" className="gap-2">
+                    Start Questionnaire
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+              )}
+              <Button asChild size="lg" variant={isAuthenticated ? "outline" : "default"}>
+                <Link href="/analyze" className="gap-2">
+                  Try Analysis
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
               </Button>
-              <Button variant="outline" asChild>
-                <Link href="/docs">Read Docs</Link>
-              </Button>
+              {!isAuthenticated && (
+                <Button variant="outline" size="lg" asChild>
+                  <Link href="/login">Sign In to Dashboard</Link>
+                </Button>
+              )}
+              {isAuthenticated && (
+                <Button variant="outline" size="lg" asChild>
+                  <Link href="/dashboard">Go to Dashboard</Link>
+                </Button>
+              )}
             </div>
           </div>
         </section>
@@ -108,15 +131,64 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Social proof placeholder */}
-        <section className="border-b border-border/60">
-          <div className="mx-auto max-w-6xl px-4 py-12">
-            <div className="flex items-center justify-between gap-6">
-              <div className="h-8 w-24 rounded bg-muted" />
-              <div className="h-8 w-24 rounded bg-muted" />
-              <div className="h-8 w-24 rounded bg-muted" />
-              <div className="h-8 w-24 rounded bg-muted" />
-              <div className="h-8 w-24 rounded bg-muted" />
+        {/* Try Analysis Section */}
+        <section className="border-b border-border/60 bg-gradient-to-b from-muted/20 to-background">
+          <div className="mx-auto max-w-6xl px-4 py-16">
+            <div className="text-center mb-12">
+              <Badge variant="outline" className="mb-4">Core Feature</Badge>
+              <h2 className="text-3xl font-semibold mb-4">Try Analysis Now</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Experience real-time emotion and stress analysis. Upload a video or record directly in your browser.
+              </p>
+            </div>
+            <div className="grid gap-6 md:grid-cols-3 mb-8">
+              <Card className="rounded-2xl border-primary/20">
+                <CardHeader>
+                  <div className="mb-2 flex items-center justify-center">
+                    <div className="rounded-full bg-primary/10 p-3">
+                      <Video className="h-6 w-6 text-primary" />
+                    </div>
+                  </div>
+                  <CardTitle className="text-center">Upload or Record</CardTitle>
+                  <CardDescription className="text-center">
+                    Choose to upload an existing video or record a new 20-second clip using your webcam.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+              <Card className="rounded-2xl border-primary/20">
+                <CardHeader>
+                  <div className="mb-2 flex items-center justify-center">
+                    <div className="rounded-full bg-primary/10 p-3">
+                      <BarChart3 className="h-6 w-6 text-primary" />
+                    </div>
+                  </div>
+                  <CardTitle className="text-center">Real-Time Analysis</CardTitle>
+                  <CardDescription className="text-center">
+                    Get instant emotion detection and stress scoring with 2-second window granularity.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+              <Card className="rounded-2xl border-primary/20">
+                <CardHeader>
+                  <div className="mb-2 flex items-center justify-center">
+                    <div className="rounded-full bg-primary/10 p-3">
+                      <TrendingUp className="h-6 w-6 text-primary" />
+                    </div>
+                  </div>
+                  <CardTitle className="text-center">Visualize Results</CardTitle>
+                  <CardDescription className="text-center">
+                    View detailed charts, heatmaps, and tables showing emotions, stress levels, and trends.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </div>
+            <div className="text-center">
+              <Button asChild size="lg" className="gap-2">
+                <Link href="/analyze">
+                  Start Analysis
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
             </div>
           </div>
         </section>
@@ -124,15 +196,30 @@ export default function HomePage() {
         {/* Final CTA */}
         <section>
           <div className="mx-auto max-w-6xl px-4 py-12">
-            <Card className="rounded-2xl">
-              <CardContent className="flex flex-col items-start gap-4 p-6 md:flex-row md:items-center md:justify-between">
-                <div>
-                  <h3 className="text-lg font-semibold">Ready to analyze your video?</h3>
-                  <p className="text-sm text-muted-foreground">Try the analyzer now and get instant insights.</p>
+            <Card className="rounded-2xl bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
+              <CardContent className="flex flex-col items-center gap-6 p-8 text-center md:flex-row md:text-left">
+                <div className="flex-1">
+                  <h3 className="text-xl font-semibold mb-2">Ready to get started?</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {isAuthenticated
+                      ? "Access your dashboard to manage analyses and view insights."
+                      : "Sign in to access your dashboard and track your analysis history."}
+                  </p>
                 </div>
-                <Button asChild>
-                  <Link href="/analyze">Go to Analyze</Link>
-                </Button>
+                <div className="flex gap-3">
+                  {!isAuthenticated ? (
+                    <Button asChild variant="default">
+                      <Link href="/login">Sign In</Link>
+                    </Button>
+                  ) : (
+                    <Button asChild variant="default">
+                      <Link href="/dashboard">Go to Dashboard</Link>
+                    </Button>
+                  )}
+                  <Button asChild variant="outline">
+                    <Link href="/analyze">Try Analysis</Link>
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </div>
