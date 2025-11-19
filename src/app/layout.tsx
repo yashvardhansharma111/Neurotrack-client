@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="dark">
-      <body className={cn(`font-sans ${GeistSans.variable} ${GeistMono.variable}`)}>
+      <body className={cn(`font-sans ${GeistSans.variable} ${GeistMono.variable} bg-black text-white`)}>
         <Suspense fallback={null}>
           <ToastProvider>
           <Toaster richColors position="top-right" closeButton />

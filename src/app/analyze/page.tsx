@@ -133,7 +133,7 @@ export default function AnalyzePage() {
   )
 
   return (
-    <div className="min-h-dvh flex flex-col">
+    <div className="min-h-dvh flex flex-col bg-black">
       <Navbar />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
@@ -215,7 +215,7 @@ export default function AnalyzePage() {
                   </Button>
                 </div>
                 {rawJsonOpen && (
-                  <pre className="max-h-[400px] overflow-auto rounded-lg bg-muted p-3 text-xs">
+                  <pre className="max-h-[400px] overflow-auto rounded-lg bg-black/50 border border-white/10 p-3 text-xs text-slate-300">
                     <code>{JSON.stringify(result, null, 2)}</code>
                   </pre>
                 )}
